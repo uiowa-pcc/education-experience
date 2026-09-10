@@ -1,10 +1,11 @@
+
 <!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light">
-<title>Brainstorm Your Experiences | My Career Path</title>
+<title>Brainstorm Your Education Experiences | My Career Path</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
@@ -34,7 +35,7 @@ p{margin:0 0 10px}.lede{font-size:1.05rem;max-width:760px;color:#2f3031}.notice{
     <div class="top">
       <div class="gold-mark" aria-hidden="true"></div>
       <h1 id="page-title">Brainstorm Your Experiences</h1>
-      <p class="lede">Use a few education-focused prompts to remember experiences that have helped you teach, lead, create, support others, or build expertise. Keep anything you may want to draw on later.</p>
+      <p class="lede">Use a few education-focused prompts to remember experiences that count. Keep anything you may want to draw on later for resumes, interviews, applications, LinkedIn, reflection, or other career work.</p>
     </div>
 
     <div class="activity">
@@ -85,43 +86,43 @@ p{margin:0 0 10px}.lede{font-size:1.05rem;max-width:760px;color:#2f3031}.notice{
 <script>
 (()=>{
 'use strict';
-const STORAGE_KEY='uiowaEducationExperienceBank_v1';
+const STORAGE_KEY='uiowaCareerExperienceBank_v1';
 const DRAFT_KEY='uiowaEducationExperienceDrafts_v1';
 const lenses=[
   {
     id:'teaching',
     title:'Teaching & related experience',
-    prompt:'What experiences have involved teaching, supporting learning, or working directly with kids or teens?',
-    examples:['student teaching or practicum','field experiences','tutoring or academic support','paraeducator or substitute work','childcare, camps, or after-school programs','mentoring or coaching'],
-    placeholder:'e.g., 8th grade science practicum, math tutor, summer camp counselor'
+    prompt:'Where have you taught, supported learning, or worked directly with children or teens?',
+    examples:['student teaching or practicum','classroom or field placements','tutoring or academic support','paraeducator or classroom aide work','childcare','camps or after-school programs','mentoring or coaching'],
+    placeholder:'e.g., 8th grade practicum, literacy tutor, camp counselor'
   },
   {
     id:'specialty',
     title:'Your subject or specialty',
-    prompt:'What have you done that shows depth, practice, or real-world experience in the subject or specialty you may teach?',
-    examples:['labs, research, or fieldwork','studio work, exhibitions, or portfolio projects','ensembles, performances, or private instruction','writing, publications, or language immersion','athletics, fitness, or coaching','technical, CTE, or discipline-specific projects and competitions'],
-    placeholder:'e.g., ceramics exhibition, biology research lab, jazz ensemble, Spanish immersion'
+    prompt:'What have you done that builds or demonstrates expertise in the subject, age group, or specialty you may teach?',
+    examples:['secondary subject projects, labs, research, writing, or presentations','art studio work, exhibitions, or portfolio pieces','music ensembles, performances, or production','PE, athletics, coaching, or fitness work','language immersion or cultural experiences','STEM, CTE, technical, or equipment-based projects'],
+    placeholder:'e.g., chemistry research project, student art exhibition, jazz ensemble'
   },
   {
     id:'work',
     title:'Work & responsibilities',
-    prompt:'What jobs or regular responsibilities have helped you work with people, stay organized, solve problems, or be someone others rely on?',
-    examples:['paid jobs or internships','customer service','childcare or caregiving','seasonal or gig work','family business','other ongoing responsibilities'],
-    placeholder:'e.g., server, nanny, front desk assistant, recreation staff'
+    prompt:'What jobs or responsibilities show how you work, communicate, solve problems, stay organized, or serve others?',
+    examples:['retail or customer service','food service or hospitality','campus jobs','office or administrative work','healthcare or human services','internships','seasonal, gig, or family-business work'],
+    placeholder:'e.g., barista, front desk assistant, summer intern'
   },
   {
     id:'involvement',
     title:'Involvement, leadership & service',
-    prompt:'Where have you participated, led, volunteered, supported others, or contributed to a group or community?',
-    examples:['student or professional organizations','subject-area clubs or associations','athletics','volunteering','committees or events','peer mentoring or campus leadership'],
-    placeholder:'e.g., NCTE student chapter, Dance Marathon committee, club soccer'
+    prompt:'Where have you contributed, led, collaborated, volunteered, or taken responsibility outside of work and class?',
+    examples:['student organizations','athletics','committees or events','peer leadership','volunteering or community service','faith or community groups','advocacy or service projects'],
+    placeholder:'e.g., club officer, volunteer event, intramural team'
   },
   {
     id:'growth',
-    title:'Projects, professional growth & things you started',
-    prompt:'What projects, training, or self-directed work have helped you build skills or become more prepared to work with students?',
-    examples:['lesson, unit, or curriculum projects','research or action-research projects','workshops, conferences, or certifications','instructional technology projects','creative or portfolio work','independent projects or side work'],
-    placeholder:'e.g., unit plan project, Google Educator training, photography portfolio'
+    title:'Projects & professional growth',
+    prompt:'What projects, training, certifications, workshops, or self-directed work have helped you build skills or grow professionally?',
+    examples:['Baker Teacher Leader Center workshops, events, or professional learning','conferences or school/district training','CPR, First Aid, or other certifications','instructional technology or curriculum projects','creative or technical projects','portfolios, competitions, or independent work'],
+    placeholder:'e.g., Baker Teacher Leader Center workshop, portfolio project, CPR certification'
   }
 ];
 let experiences=[];
@@ -142,7 +143,11 @@ const bankStatus=document.getElementById('bankStatus');
 
 function esc(v=''){return String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
 function uid(){return (window.crypto&&crypto.randomUUID)?crypto.randomUUID():`exp-${Date.now()}-${Math.random().toString(16).slice(2)}`}
-function normalizeSource(s){return ['teaching','specialty','work','involvement','growth'].includes(s)?s:'growth'}
+function normalizeSource(s){
+  const old={class:'specialty',independent:'growth',caregiving:'teaching',athletics:'involvement',volunteer:'involvement',research:'specialty',other:'growth'};
+  if(old[s])return old[s];
+  return ['teaching','specialty','work','involvement','growth'].includes(s)?s:'growth';
+}
 function load(){
   try{
     const saved=JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');
@@ -170,7 +175,7 @@ function renderPrompt(focus=false){
           <input id="ideaInput" type="text" autocomplete="off" value="${esc(drafts[l.id]||'')}" placeholder="${esc(l.placeholder)}">
           <button id="addIdea" class="btn primary" type="button">Add</button>
         </div>
-        <div class="hint">Add as many as come to mind, one at a time. Nothing to add here? Move to the next category.</div>
+        <div class="hint">Add as many as come to mind, one at a time. Nothing come to mind here? Move to the next category.</div>
         <div id="addStatus" class="status" role="status" aria-live="polite"></div>
       </div>
       <div class="nav">
