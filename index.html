@@ -171,7 +171,8 @@ function renderPrompt(focus=false){
           <input id="ideaInput" type="text" autocomplete="off" value="${esc(drafts[l.id]||'')}" placeholder="${esc(l.placeholder)}">
           <button id="addIdea" class="btn primary" type="button">Add</button>
         </div>
-        <div class="hint" id="categoryGuidance">${experiences.some(e=>e.sourceCategory===l.id)?'Add another, or move on when you are ready.':'Nothing to add here? Skip this category and move on.'}</div>
+        <div class="hint">Press Enter or select Add to save this experience.</div>
+        <div class="skip-note" id="categoryGuidance">${experiences.some(e=>e.sourceCategory===l.id)?'Add another, or move on when you are ready.':'Nothing to add here? Skip this category and move on.'}</div>
         <div id="addStatus" class="status" role="status" aria-live="polite"></div>
       </div>
       <div class="nav">
