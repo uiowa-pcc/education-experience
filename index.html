@@ -171,8 +171,7 @@ function renderPrompt(focus=false){
           <input id="ideaInput" type="text" autocomplete="off" value="${esc(drafts[l.id]||'')}" placeholder="${esc(l.placeholder)}">
           <button id="addIdea" class="btn primary" type="button">Add</button>
         </div>
-        <div class="hint">Add as many as you want.</div>
-        <div class="skip-note">Nothing to add here? Skip this category and move on.</div>
+        <div class="hint" id="categoryGuidance">${experiences.some(e=>e.sourceCategory===l.id)?'Add another, or move on when you are ready.':'Nothing to add here? Skip this category and move on.'}</div>
         <div id="addStatus" class="status" role="status" aria-live="polite"></div>
       </div>
       <div class="nav">
@@ -202,7 +201,9 @@ function addIdea(){
   input.value='';
   save();
   renderLists();
-  status.textContent='Added. Add another, or move on when you are ready.';
+  status.textContent='Added.';
+  const guidance=document.getElementById('categoryGuidance');
+  if(guidance)guidance.textContent='Add another, or move on when you are ready.';
   input.focus();
 }
 function goStep(next){
